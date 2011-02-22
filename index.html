@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+<head>
+<title>fullscreen demo</title>
+
+<style>
+
+.hijacker{
+    display: inline-block;
+    width: 320px;
+    margin: 5px;
+    position: relative;
+}
+    .hijacker .hijack{
+        position: absolute;
+        top: 0; left: 0;
+        width: 320px;
+        height: 240px;
+        z-index: 5;
+        cursor: pointer;
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<div id=player></div>
+<div id=list></div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.js"></script>
+<script>
+
+function handle_youtube_load(data){
+    console.log(data);
+    $.each(data.feed.entry, function(i, entry){
+        make_iframe(entry.id.$t.split('/').pop());
+        
+        return i < 11;
+    })
+}
+
+function make_iframe(id){
+    $('<div/>', {'data-id': id, 'class': 'hijacker',
+        'click': function(ev){
+            console.log($(this).data('id'));
+            return false;
+        }    
+    }).append(
+    $('<iframe />', {
+        'title': '', width: 320, height: 240,
+        frameborder: 0, 'data-id': id, allowfullscreen: true,
+        'src': 'http://www.youtube.com/embed/' + id + ''
+    }).after($('<div/>', {'class': 'hijack'}))).appendTo($('#list'));
+}
+
+$(function(){
+
+	$('<script/>').attr('src', 'http://gdata.youtube.com/feeds/api/standardfeeds/most_popular?time=today&format=5&alt=json&callback=handle_youtube_load').appendTo('body');
+
+})
+
+</script>
+
+</body>
+
+</html>
