@@ -11,55 +11,75 @@
     width: 320px;
     margin: 5px;
     position: relative;
+    z-index: 5;
 }
-    .hijacker .hijack{
-        position: absolute;
-        top: 0; left: 0;
-        width: 320px;
-        height: 240px;
-        z-index: 5;
-        cursor: pointer;
+#player{
+    width: 500px;
+    margin: 20px auto;
+}
+
+
+.fullscreen #player{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: black;
+}
+
+    .fullscreen #player iframe{
+        width: 100%;
+        height: 100%;
+        position: relative;
     }
 
 </style>
 
 </head>
 
-<body>
+<body class="fullscreen">
 
 <div id=player></div>
 <div id=list></div>
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.js"></script>
+<script src="jquery.onfullscreen-1.0.0.js"></script>
 <script>
 
 function handle_youtube_load(data){
-    console.log(data);
+    
     $.each(data.feed.entry, function(i, entry){
-        make_iframe(entry.id.$t.split('/').pop());
-        
+        make_thumbnail({
+            'thumb': entry.media$group.media$thumbnail[0].url,
+            'iframe_url': entry.media$group.media$content[0].url
+        });
         return i < 11;
     })
 }
 
-function make_iframe(id){
-    $('<div/>', {'data-id': id, 'class': 'hijacker',
-        'click': function(ev){
-            console.log($(this).data('id'));
-            return false;
-        }    
-    }).append(
-    $('<iframe />', {
-        'title': '', width: 320, height: 240,
-        frameborder: 0, 'data-id': id, allowfullscreen: true,
-        'src': 'http://www.youtube.com/embed/' + id + ''
-    }).after($('<div/>', {'class': 'hijack'}))).appendTo($('#list'));
+$(window).bind('fullscreen', function(ev, is_fullscreen){
+    $('body').toggleClass('fullscreen', is_fullscreen);
+})
+
+function make_thumbnail(data){
+    $('<img />', {
+        "src": data.thumb,
+        "class": "hijacker",
+        "click": function(ev){
+            $('#player').empty().append($('<iframe />', {
+                'src': data.iframe_url,
+                'height': '100%',
+                'width': '100%',
+                'position': 'relative'
+            }).slideDown());
+            window.location.hash = 'player'
+        }
+    }).appendTo(document.body)
 }
 
 $(function(){
 
-	$('<script/>').attr('src', 'http://gdata.youtube.com/feeds/api/standardfeeds/most_popular?time=today&format=5&alt=json&callback=handle_youtube_load').appendTo('body');
+    $('<script/>').attr('src', 'http://gdata.youtube.com/feeds/api/standardfeeds/most_popular?time=today&format=5&alt=json&callback=handle_youtube_load').appendTo('body');
 
 })
 
