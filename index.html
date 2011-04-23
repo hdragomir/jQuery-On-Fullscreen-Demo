@@ -2,7 +2,12 @@
 <html>
 
 <head>
-<title>fullscreen demo</title>
+    <meta charset="utf-8" />
+    <title>Fullscreen event with jQuery demo</title>
+
+    <meta property="og:title" content="Fullscreen event with jQuery demo"/>
+    <meta property="og:type" content="application"/>
+    <meta property="og:site_name" content="hdragomir.com"/>
 
 <style>
 
@@ -69,7 +74,7 @@ body{
         color: #fff;
         display: block;
         text-align: center;
-        font: normal normal 23px/36px Cambria, Georgia, "Times New Roman", Times, serif;
+
         position: relative;
         padding: 0;
         margin: 0;
@@ -115,6 +120,49 @@ body{
             opacity: .5;
         }
 
+.outer-list{
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.outer-list > *{
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+
+h1{
+    font: normal normal 23px/36px Cambria, Georgia, "Times New Roman", Times, serif;
+}
+
+
+
+footer{
+    position: relative;
+    padding-bottom: 50px;
+    text-align: left;
+    opacity: .5;
+    transition: opacity .2s;
+    -o-transition: opacity .2s;
+    -moz-transition: opacity .2s;
+    -webkit-transition: opacity .2s;
+}
+    footer:hover{
+        opacity: 1;
+    }
+    footer div{
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 20px;
+    }
+
+    aside{
+        display: block;
+        font: 10px/14px Helvetica, Verdana, Arial;
+        opacity: .4;
+    }
+
+
 </style>
 
 </head>
@@ -122,7 +170,37 @@ body{
 <body>
 
 <div id=player><h1>Now go fullscreen</h1></div>
-<div id=list></div>
+<div class=outer-list>
+    <div>
+        <h1>Fullscreen event with jQuery | Demo using youtube's &quot;most popular this week&quot;</h1>
+        <p>
+            This page uses the <a href="https://github.com/hdragomir/jQuery-Fullscreen-Event">jQuery onfullscreen</a> plugin.
+        </p>
+    </div>
+    <div id=list></div>
+
+    <div>
+        <h1>
+            Get the <a href="https://github.com/hdragomir/jQuery-Fullscreen-Event">jQuery onfullscreen plugin</a> and see what you can make today!
+        </h1>
+    </div>
+    <footer>
+
+        <div>
+            <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://labs.hdragomir.com/onfullscreen-demo" data-text="Javascript onfullscreen event with jQuery" data-count="horizontal" data-via="hdragomir">Share on twitter</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        </div>
+
+        <div>
+            <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Flabs.hdragomir.com%2Fonfullscreen-demo&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;font=lucida+grande&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>
+        </div>
+
+        <aside>
+            made by <a href="http://hdragomir.com">Horia Dragomir</a>.
+        </aside>
+
+    </footer>
+</div>
+
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.js"></script>
@@ -157,7 +235,7 @@ function make_thumbnail(data){
             window.location.hash = 'player';
             window.scrollTo(0, 0);
         }
-    }).appendTo(document.body).bind('load', function(){
+    }).appendTo('#list').bind('load', function(){
         $(this).removeClass('o0').hide().fadeIn('fast');
     });
 }
