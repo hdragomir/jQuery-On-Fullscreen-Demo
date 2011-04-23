@@ -6,6 +6,12 @@
 
 <style>
 
+body{
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
 .hijacker{
     display: inline-block;
     width: 320px;
@@ -16,6 +22,8 @@
 #player{
     width: 500px;
     margin: 20px auto;
+    height: 400px;
+    display: none;
 }
 
 
@@ -24,6 +32,7 @@
     height: 100%;
     position: relative;
     background: black;
+    margin: 0 0 50px;
 }
 
     .fullscreen #player iframe{
@@ -36,7 +45,7 @@
 
 </head>
 
-<body class="fullscreen">
+<body>
 
 <div id=player></div>
 <div id=list></div>
@@ -47,7 +56,7 @@
 <script>
 
 function handle_youtube_load(data){
-    
+
     $.each(data.feed.entry, function(i, entry){
         make_thumbnail({
             'thumb': entry.media$group.media$thumbnail[0].url,
@@ -71,10 +80,11 @@ function make_thumbnail(data){
                 'height': '100%',
                 'width': '100%',
                 'position': 'relative'
-            }).slideDown());
-            window.location.hash = 'player'
+            })).slideDown();
+            window.location.hash = 'player';
+            window.scrollTo(0, 0);
         }
-    }).appendTo(document.body)
+    }).appendTo(document.body);
 }
 
 $(function(){
