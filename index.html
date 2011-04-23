@@ -174,14 +174,14 @@ footer{
     <div>
         <h1>Fullscreen event with jQuery | Demo using youtube's &quot;most popular this week&quot;</h1>
         <p>
-            This page uses the <a href="https://github.com/hdragomir/jQuery-Fullscreen-Event">jQuery onfullscreen</a> plugin.
+            This page uses the <a rel=external href="https://github.com/hdragomir/jQuery-Fullscreen-Event">jQuery onfullscreen</a> plugin.
         </p>
     </div>
     <div id=list></div>
 
     <div>
         <h1>
-            Get the <a href="https://github.com/hdragomir/jQuery-Fullscreen-Event">jQuery onfullscreen plugin</a> and see what you can make today!
+            Get the <a rel=external href="https://github.com/hdragomir/jQuery-Fullscreen-Event">jQuery onfullscreen plugin</a> and see what you can make today!
         </h1>
     </div>
     <footer>
@@ -195,7 +195,7 @@ footer{
         </div>
 
         <aside>
-            made by <a href="http://hdragomir.com">Horia Dragomir</a>.
+            made by <a rel=external href="http://hdragomir.com">Horia Dragomir</a>.
         </aside>
 
     </footer>
@@ -242,6 +242,11 @@ function make_thumbnail(data){
 }
 
 $(function(){
+
+    $('a[rel*=external]').click(function(ev){
+        analytics.track('/outbound/' + $(this).attr('href').replace(/^https?/, ''));
+    }).attr('target', '_blank');
+
     $('<script/>').attr('src', 'http://gdata.youtube.com/feeds/api/standardfeeds/most_popular?time=this_week&format=5&alt=json&callback=handle_youtube_load').appendTo('body');
 })
 
