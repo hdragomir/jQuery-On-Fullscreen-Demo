@@ -20,7 +20,28 @@ body{
     margin: 5px;
     position: relative;
     z-index: 5;
+    transition: all .3s;
+    -webkit-transition: all .3s ;
+    -moz-transition: all .3s;
+
+    box-shadow: 0 3px 5px -2px rgba(23,23,23, .4);
+    -webkit-box-shadow: 0 3px 5px -2px rgba(23,23,23, .4);
+    -moz-box-shadow: 0 3px 5px -2px rgba(23,23,23, .4);
+    opacity: 1;
+
+    cursor: pointer;
 }
+
+.hijacker:hover{
+    box-shadow: 0 3px 5px -2px rgba(23,23,23, .8);
+    -webkit-box-shadow: 0 3px 5px -2px rgba(23,23,23, .8);
+    -moz-box-shadow: 0 3px 5px -2px rgba(23,23,23, .8);
+}
+
+.o0{
+    opacity: 0;
+}
+
 #player{
     width: 500px;
     margin: 20px auto 150px;
@@ -31,10 +52,6 @@ body{
     transition: all .3s;
     -webkit-transition: all .3s ;
     -moz-transition: all .3s;
-
-    transition-delay: 0;
-    -moz-transition-delay: 0;
-    -webkit-transition-delay: 0;
 
     box-shadow: 0 10px 10px -10px rgba(23,23,23, .4);
     -webkit-box-shadow: 0 10px 10px -10px rgba(23,23,23, .4);
@@ -94,7 +111,7 @@ body{
             text-align: center;
             font: normal normal 23px/36px Cambria, Georgia, "Times New Roman", Times, serif;
             position: relative;
-            content: "Thank you for entering fullscreen!";
+            content: "Thank you for entering fullscreen! Scrolling still works, by the way.";
             opacity: .5;
         }
 
@@ -130,7 +147,7 @@ $(window).bind('fullscreen', function(ev, is_fullscreen){
 function make_thumbnail(data){
     $('<img />', {
         "src": data.thumb,
-        "class": "hijacker",
+        "class": "hijacker o0",
         "click": function(ev){
             $('#player').children('iframe').remove().end().append($('<iframe />', {
                 'src': data.iframe_url,
@@ -140,7 +157,9 @@ function make_thumbnail(data){
             window.location.hash = 'player';
             window.scrollTo(0, 0);
         }
-    }).appendTo(document.body);
+    }).appendTo(document.body).bind('load', function(){
+        $(this).removeClass('o0').hide().fadeIn('fast');
+    });
 }
 
 $(function(){
