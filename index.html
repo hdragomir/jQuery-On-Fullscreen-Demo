@@ -220,6 +220,8 @@ function handle_youtube_load(data){
 
 $(window).bind('fullscreen', function(ev, is_fullscreen){
     $('body').toggleClass('fullscreen', is_fullscreen);
+
+    analytics.event('fullscreen', is_fullscreen ? 'entered' : 'left');
 });
 
 function make_thumbnail(data){
