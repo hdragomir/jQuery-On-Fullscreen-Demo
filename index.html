@@ -6,6 +6,7 @@
     <title>Fullscreen event with jQuery demo</title>
 
     <meta property="og:title" content="Fullscreen event with jQuery demo"/>
+    <meta property="fb:admins" content="541788461" />
 
 <style>
 
@@ -170,7 +171,7 @@ footer{
 <div id=player><h1>Now go fullscreen with your browser (F11)</h1></div>
 <div class=outer-list>
     <div>
-        <h1>Fullscreen event with jQuery | Demo using youtube's &quot;most popular this week&quot;</h1>
+        <h1><a rel=external href="https://github.com/hdragomir/jQuery-Fullscreen-Event#top">Fullscreen event with jQuery</a> | Demo using youtube's &quot;most popular this week&quot;</h1>
         <p>
             This page uses the <a rel=external href="https://github.com/hdragomir/jQuery-Fullscreen-Event">jQuery onfullscreen</a> plugin.
         </p>
@@ -242,7 +243,7 @@ function make_thumbnail(data){
 $(function(){
 
     $('a[rel*=external]').click(function(ev){
-        analytics.track('/outbound/' + $(this).attr('href').replace(/^https?/, ''));
+        analytics.track('/outbound/' + $(this).attr('href').replace(/^https?\:\/\//, ''));
     }).attr('target', '_blank');
 
     $('<script/>').attr('src', 'http://gdata.youtube.com/feeds/api/standardfeeds/most_popular?time=this_week&format=5&alt=json&callback=handle_youtube_load').appendTo('body');
